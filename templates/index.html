@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>For {{ name }} 💖</title>
+  <title>For my {{ name }} 💖</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
@@ -16,53 +16,50 @@
   <button id="music-btn">▶ Play music</button>
 
   <div class="container">
-    <h1>💕 Hiiiiii 💕</h1>
+    <h1>💕 Hiiiiii Mahbuba 💕</h1>
 
     <p class="intro">
-      I made this little place just for you. 🤍
+      I made this little place just for you
     </p>
-
-    <!-- Photo Slider (4 photos) -->
-    <div class="slider" id="slider">
-      <div class="slides" id="slides">
-        <div class="slide">
-          <img src="{{ url_for('static', filename='photos/1.JPG') }}">
-        </div>
-        <div class="slide">
-          <img src="{{ url_for('static', filename='photos/2.JPG') }}">
-        </div>
-        <div class="slide">
-          <img src="{{ url_for('static', filename='photos/3.JPG') }}">
-        </div>
-        <div class="slide">
-          <img src="{{ url_for('static', filename='photos/4.JPG') }}">
-        </div>
-      </div>
-
-      <button class="nav prev" aria-label="Previous photo">‹</button>
-      <button class="nav next" aria-label="Next photo">›</button>
-
-      <div class="dots" id="dots"></div>
-    </div>
 
     <!-- Game -->
     <div id="score">Hearts: 0</div>
     <div id="game-area"></div>
 
-    <!-- Full-page Surprise Overlay -->
-<div id="surprise-overlay" aria-hidden="true">
-  <div class="surprise-card">
-    <div class="surprise-title">💌 For you, Mahbuba</div>
+    <!-- Gift Box Surprise (tap to reveal photos) -->
+    <div class="gift-area" id="gift-area">
+      <div class="gift-hint">Tap the gift 🎁</div>
 
-    <div class="surprise-text">
-      you make my days brighter, <br>
-      my heart calmer, <br>
-      and with you I feel like myself 💖
+      <div id="giftbox" class="giftbox" role="button" tabindex="0" aria-label="Open gift">
+        <div class="lid"></div>
+        <div class="box"></div>
+        <div class="ribbon-v"></div>
+        <div class="ribbon-h"></div>
+      </div>
+
+      <div class="gift-photos" id="gift-photos" aria-hidden="true">
+        <img class="gift-photo p1" src="{{ url_for('static', filename='photos/1.JPG') }}" alt="Mahbuba photo 1">
+        <img class="gift-photo p2" src="{{ url_for('static', filename='photos/2.JPG') }}" alt="Mahbuba photo 2">
+        <img class="gift-photo p3" src="{{ url_for('static', filename='photos/3.JPG') }}" alt="Mahbuba photo 3">
+        <img class="gift-photo p4" src="{{ url_for('static', filename='photos/4.JPG') }}" alt="Mahbuba photo 4">
+      </div>
     </div>
-    <button id="close-surprise">Close 🤍</button>
   </div>
-</div>
 
+  <!-- Full-page Surprise Overlay -->
+  <div id="surprise-overlay" aria-hidden="true">
+    <div class="surprise-card">
+      <div class="surprise-title">💌 For you, Mahbuba</div>
+
+      <div class="surprise-text">
+        you make my days brighter, <br>
+        my heart calmer, <br>
+        and with you I feel like myself 💖
+      </div>
+
+      <button id="close-surprise">Close 🤍</button>
+    </div>
+  </div>
 
   <script src="{{ url_for('static', filename='game.js') }}"></script>
 </body>
