@@ -1,0 +1,92 @@
+body {
+  margin: 0;
+  font-family: 'Poppins', 'Comic Sans MS', sans-serif;
+  background: linear-gradient(180deg, #ffe6f0, #fff);
+  text-align: center;
+  overflow: hidden;
+}
+
+.container {
+  padding: 20px;
+}
+
+h1 {
+  color: #ff4d88;
+  font-size: 2.2em;
+  margin-top: 30px;
+}
+
+.intro {
+  color: #555;
+  font-size: 1.05em;
+  margin-bottom: 20px;
+}
+
+#score {
+  font-size: 1.1em;
+  color: #ff3377;
+  margin-bottom: 10px;
+}
+
+#game-area {
+  position: relative;
+  height: 320px;
+  width: 100%;
+}
+
+.heart {
+  position: absolute;
+  font-size: 30px;
+  cursor: pointer;
+  animation: floatUp 3s linear forwards;
+}
+
+@keyframes floatUp {
+  from {
+    bottom: 0;
+    opacity: 1;
+  }
+  to {
+    bottom: 320px;
+    opacity: 0;
+  }
+}
+
+#surprise {
+  display: none;
+  margin-top: 20px;
+  font-size: 1.2em;
+  color: #ff1a66;
+  animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+#music-btn {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ff6f9f;
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  font-size: 1em;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(255, 111, 159, 0.45);
+  transition: all 0.25s ease;
+}
+
+#music-btn:active {
+  transform: translateX(-50%) scale(0.95);
+}
+
+@keyframes pulse {
+  0% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(1.08); }
+  100% { transform: translateX(-50%) scale(1); }
+}
