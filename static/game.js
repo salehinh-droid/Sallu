@@ -1,3 +1,5 @@
+// ---------- Game + Music + Slider (clean) ----------
+
 let score = 0;
 
 const scoreText = document.getElementById("score");
@@ -12,11 +14,10 @@ let isPlaying = false;
 function createHeart() {
   const heart = document.createElement("div");
   heart.className = "heart";
+
   const hearts = ["💖", "💗", "💞", "💕"];
-heart.innerText = hearts[Math.floor(Math.random() * hearts.length)];
+  heart.innerText = hearts[Math.floor(Math.random() * hearts.length)];
 
-
-  // Position relative to game area width (better on mobile)
   const maxLeft = gameArea.clientWidth - 40;
   heart.style.left = Math.max(0, Math.random() * maxLeft) + "px";
 
@@ -31,7 +32,6 @@ heart.innerText = hearts[Math.floor(Math.random() * hearts.length)];
   };
 
   gameArea.appendChild(heart);
-
   setTimeout(() => heart.remove(), 3000);
 }
 
@@ -42,7 +42,7 @@ musicBtn.addEventListener("click", async () => {
   try {
     if (!isPlaying) {
       music.volume = 0.4;
-      await music.play(); // await helps catch mobile play errors
+      await music.play();
       musicBtn.innerText = "⏸ Pause music";
       isPlaying = true;
     } else {
@@ -51,7 +51,6 @@ musicBtn.addEventListener("click", async () => {
       isPlaying = false;
     }
   } catch (e) {
-    // If browser blocks, user may need to tap again
     alert("Tap again to start music 🎶");
     console.error(e);
   }
@@ -67,7 +66,6 @@ const nextBtn = document.querySelector(".nav.next");
 let current = 0;
 const total = slidesEl ? slidesEl.children.length : 0;
 
-// Build dots
 if (dotsEl && total > 0) {
   for (let i = 0; i < total; i++) {
     const d = document.createElement("div");
@@ -79,9 +77,7 @@ if (dotsEl && total > 0) {
 
 function updateDots() {
   if (!dotsEl) return;
-  [...dotsEl.children].forEach((d, i) => {
-    d.classList.toggle("active", i === current);
-  });
+  [...dotsEl.children].forEach((d, i) => d.classList.toggle("active", i === current));
 }
 
 function goTo(index, userAction = false) {
@@ -92,11 +88,9 @@ function goTo(index, userAction = false) {
   if (userAction) resetAuto();
 }
 
-// Buttons
 if (prevBtn) prevBtn.addEventListener("click", () => goTo(current - 1, true));
 if (nextBtn) nextBtn.addEventListener("click", () => goTo(current + 1, true));
 
-// Swipe support
 let startX = 0;
 let isDown = false;
 
@@ -119,7 +113,6 @@ if (sliderEl) {
   }, { passive: true });
 }
 
-// Auto-play (soft). Stops resetting after user taps/swipes.
 let autoTimer = null;
 function startAuto() {
   if (total <= 1) return;
@@ -129,6 +122,4 @@ function resetAuto() {
   if (autoTimer) clearInterval(autoTimer);
   startAuto();
 }
-
 startAuto();
-
