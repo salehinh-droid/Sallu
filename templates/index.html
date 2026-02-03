@@ -16,7 +16,7 @@
   <button id="music-btn">▶ Play music</button>
 
   <div class="container">
-    <h1>Hey {{ name }} 💕</h1>
+    <h1>💕 Hiiiiii 💕</h1>
 
     <p class="intro">
       I made this little place just for you. 🤍
@@ -49,13 +49,20 @@
     <div id="score">Hearts: 0</div>
     <div id="game-area"></div>
 
-    <div id="surprise">
-      💌 Mahbuba, <br>
+    <!-- Full-page Surprise Overlay -->
+<div id="surprise-overlay" aria-hidden="true">
+  <div class="surprise-card">
+    <div class="surprise-title">💌 For you, Mahbuba</div>
+
+    <div class="surprise-text">
       you make my days brighter, <br>
       my heart calmer, <br>
-      and my world softer 💖
+      and with you I feel like myself 💖
     </div>
+    <button id="close-surprise">Close 🤍</button>
   </div>
+</div>
+
 
   <script src="{{ url_for('static', filename='game.js') }}"></script>
 </body>

@@ -1,17 +1,38 @@
-// ---------- Game + Music + Slider (clean) ----------
+// ---------- Game + Music + Slider + Surprise Overlay (clean) ----------
 
+// -------- Game state --------
 let score = 0;
 
 const scoreText = document.getElementById("score");
 const gameArea = document.getElementById("game-area");
-const surprise = document.getElementById("surprise");
 
 const music = document.getElementById("bg-music");
 const musicBtn = document.getElementById("music-btn");
 let isPlaying = false;
 
+// -------- Surprise overlay elements --------
+const overlay = document.getElementById("surprise-overlay");
+const closeBtn = document.getElementById("close-surprise");
+
+// Close overlay (button + tap outside)
+if (overlay && closeBtn) {
+  closeBtn.addEventListener("click", () => {
+    overlay.classList.remove("show");
+    overlay.setAttribute("aria-hidden", "true");
+  });
+
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) {
+      overlay.classList.remove("show");
+      overlay.setAttribute("aria-hidden", "true");
+    }
+  });
+}
+
 // -------- Game: floating hearts --------
 function createHeart() {
+  if (!gameArea) return;
+
   const heart = document.createElement("div");
   heart.className = "heart";
 
@@ -23,11 +44,13 @@ function createHeart() {
 
   heart.onclick = () => {
     score++;
-    scoreText.innerText = "Hearts: " + score;
+    if (scoreText) scoreText.innerText = "Hearts: " + score;
     heart.remove();
 
-    if (score >= 8) {
-      surprise.style.display = "block";
+    // Show full-page surprise overlay
+    if (score >= 4 && overlay) {
+      overlay.classList.add("show");
+      overlay.setAttribute("aria-hidden", "false");
     }
   };
 
@@ -38,23 +61,25 @@ function createHeart() {
 setInterval(createHeart, 900);
 
 // -------- Music: play/pause toggle --------
-musicBtn.addEventListener("click", async () => {
-  try {
-    if (!isPlaying) {
-      music.volume = 0.4;
-      await music.play();
-      musicBtn.innerText = "⏸ Pause music";
-      isPlaying = true;
-    } else {
-      music.pause();
-      musicBtn.innerText = "▶ Play music";
-      isPlaying = false;
+if (musicBtn && music) {
+  musicBtn.addEventListener("click", async () => {
+    try {
+      if (!isPlaying) {
+        music.volume = 0.4;
+        await music.play();
+        musicBtn.innerText = "⏸ Pause music";
+        isPlaying = true;
+      } else {
+        music.pause();
+        musicBtn.innerText = "▶ Play music";
+        isPlaying = false;
+      }
+    } catch (e) {
+      alert("Tap again to start music 🎶");
+      console.error(e);
     }
-  } catch (e) {
-    alert("Tap again to start music 🎶");
-    console.error(e);
-  }
-});
+  });
+}
 
 // ---------- Photo Slider ----------
 const slidesEl = document.getElementById("slides");
@@ -66,6 +91,7 @@ const nextBtn = document.querySelector(".nav.next");
 let current = 0;
 const total = slidesEl ? slidesEl.children.length : 0;
 
+// Build dots
 if (dotsEl && total > 0) {
   for (let i = 0; i < total; i++) {
     const d = document.createElement("div");
@@ -81,16 +107,18 @@ function updateDots() {
 }
 
 function goTo(index, userAction = false) {
-  if (!slidesEl) return;
+  if (!slidesEl || total === 0) return;
   current = (index + total) % total;
   slidesEl.style.transform = `translateX(-${current * 100}%)`;
   updateDots();
   if (userAction) resetAuto();
 }
 
+// Buttons
 if (prevBtn) prevBtn.addEventListener("click", () => goTo(current - 1, true));
 if (nextBtn) nextBtn.addEventListener("click", () => goTo(current + 1, true));
 
+// Swipe support
 let startX = 0;
 let isDown = false;
 
@@ -113,13 +141,17 @@ if (sliderEl) {
   }, { passive: true });
 }
 
+// Auto-play
 let autoTimer = null;
+
 function startAuto() {
   if (total <= 1) return;
   autoTimer = setInterval(() => goTo(current + 1, false), 3500);
 }
+
 function resetAuto() {
   if (autoTimer) clearInterval(autoTimer);
   startAuto();
 }
+
 startAuto();
