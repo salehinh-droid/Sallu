@@ -8,7 +8,7 @@
 </head>
 
 <body>
-  <!-- Background Music (must be inside body) -->
+  <!-- Background Music -->
   <audio id="bg-music" loop>
     <source src="{{ url_for('static', filename='love.mp3') }}" type="audio/mpeg">
   </audio>
@@ -22,6 +22,30 @@
       I made this little place just for you. 🤍
     </p>
 
+    <!-- Photo Slider (4 photos) -->
+    <div class="slider" id="slider">
+      <div class="slides" id="slides">
+        <div class="slide">
+          <img src="{{ url_for('static', filename='photos/1.JPG') }}">
+        </div>
+        <div class="slide">
+          <img src="{{ url_for('static', filename='photos/2.JPG') }}">
+        </div>
+        <div class="slide">
+          <img src="{{ url_for('static', filename='photos/3.JPG') }}">
+        </div>
+        <div class="slide">
+          <img src="{{ url_for('static', filename='photos/4.JPG') }}">
+        </div>
+      </div>
+
+      <button class="nav prev" aria-label="Previous photo">‹</button>
+      <button class="nav next" aria-label="Next photo">›</button>
+
+      <div class="dots" id="dots"></div>
+    </div>
+
+    <!-- Game -->
     <div id="score">Hearts: 0</div>
     <div id="game-area"></div>
 
